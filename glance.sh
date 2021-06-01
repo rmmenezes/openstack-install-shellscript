@@ -1,4 +1,5 @@
 #!/bin/bash
+set -x #echo on
 
 ################################################################
 #mysql -u root -p
@@ -21,6 +22,8 @@ export OS_PROJECT_DOMAIN_NAME=Default
 export OS_AUTH_URL=http://127.0.0.1:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
+
+# export OS_AUTH_URL=http://127.0.0.1:5000/v3
 
 
 ##############################################################

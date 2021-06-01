@@ -1,4 +1,6 @@
 #!/bin/bash
+set -x #echo on
+
 
 echo executando comandos..
 ################################################################
