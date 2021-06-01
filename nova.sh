@@ -217,9 +217,11 @@ nova-status upgrade check
 ####################################################################################################
 # https://docs.openstack.org/nova/wallaby/install/compute-install-ubuntu.html
 
-apt install nova-compute
+apt install nova-compute -y
 egrep -c '(vmx|svm)' /proc/cpuinfo
-# sed -i '/\[libvirt\]$/a virt_type = qemu' /etc/nova/nova-compute.conf
+
+sed -i '/\[libvirt\]$/{n;s/.*/#/}' /etc/nova/nova.conf
+sed -i '/\[libvirt\]$/a virt_type = qemu' /etc/nova/nova-compute.conf
 service nova-compute restart
 
 openstack compute service list --service nova-compute
