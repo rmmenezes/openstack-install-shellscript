@@ -96,9 +96,9 @@ openstack service create --name placement --description "Placement API" placemen
 # openstack endpoint create --region RegionOne placement internal http://127.0.0.1:8778
 # openstack endpoint create --region RegionOne placement admin http://127.0.0.1:8778
 
-openstack endpoint create --region RegionOne placement public http://127.0.0.1:9292
-openstack endpoint create --region RegionOne placement internal http://127.0.0.1:9292
-openstack endpoint create --region RegionOne placement admin http://127.0.0.1:9292
+openstack endpoint create --region RegionOne placement public http://127.0.0.1:8778
+openstack endpoint create --region RegionOne placement internal http://127.0.0.1:8778
+openstack endpoint create --region RegionOne placement admin http://127.0.0.1:8778
 
 apt install placement-api -y
 apt install python3-pip -y
@@ -144,18 +144,18 @@ sed -i '/\[DEFAULT\]$/a transport_url = rabbit://openstack:RABBIT_PASS@127.0.0.1
 
 #essa parte peguei deste link
 #https://openstack-xenserver.readthedocs.io/en/latest/06-install-compute-nova-on-controller.html
-sed -i '/\[DEFAULT\]$/a rpc_backend = rabbit' /etc/nova/nova.conf
-sed -i '/\[DEFAULT\]$/a auth_strategy = keystone' /etc/nova/nova.conf
-sed -i '/\[DEFAULT\]$/a network_api_class = nova.network.neutronv2.api.API' /etc/nova/nova.conf
-sed -i '/\[DEFAULT\]$/a security_group_api = neutron' /etc/nova/nova.conf
-sed -i '/\[DEFAULT\]$/a linuxnet_interface_driver = nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver' /etc/nova/nova.conf
-sed -i '/\[DEFAULT\]$/a firewall_driver = nova.virt.firewall.NoopFirewallDriver' /etc/nova/nova.conf
-sed -i '/\[DEFAULT\]$/a enabled_apis = osapi_compute,metadata' /etc/nova/nova.conf
+# sed -i '/\[DEFAULT\]$/a rpc_backend = rabbit' /etc/nova/nova.conf
+# sed -i '/\[DEFAULT\]$/a auth_strategy = keystone' /etc/nova/nova.conf
+# sed -i '/\[DEFAULT\]$/a network_api_class = nova.network.neutronv2.api.API' /etc/nova/nova.conf
+# sed -i '/\[DEFAULT\]$/a security_group_api = neutron' /etc/nova/nova.conf
+# sed -i '/\[DEFAULT\]$/a linuxnet_interface_driver = nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver' /etc/nova/nova.conf
+# sed -i '/\[DEFAULT\]$/a firewall_driver = nova.virt.firewall.NoopFirewallDriver' /etc/nova/nova.conf
+# sed -i '/\[DEFAULT\]$/a enabled_apis = osapi_compute,metadata' /etc/nova/nova.conf
 
 
-sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_host = 127.0.0.1' /etc/nova/nova.conf
-sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_userid = openstack' /etc/nova/nova.conf
-sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_password = *RABBIT_PASS*' /etc/nova/nova.conf
+# sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_host = 127.0.0.1' /etc/nova/nova.conf
+# sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_userid = openstack' /etc/nova/nova.conf
+# sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_password = *RABBIT_PASS*' /etc/nova/nova.conf
   
    
 # essa parte peguei deste link
@@ -220,7 +220,7 @@ nova-status upgrade check
 apt install nova-compute -y
 egrep -c '(vmx|svm)' /proc/cpuinfo
 
-sed -i '/\[libvirt\]$/{n;s/.*/#/}' /etc/nova/nova.conf
+sed -i '/\[libvirt\]$/{n;s/.*/#/}' /etc/nova/nova-compute.conf
 sed -i '/\[libvirt\]$/a virt_type = qemu' /etc/nova/nova-compute.conf
 service nova-compute restart
 

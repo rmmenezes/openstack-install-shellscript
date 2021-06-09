@@ -55,7 +55,7 @@ export OS_TENANT_NAME=admin
 #	default_store = file
 #	filesystem_store_datadir = /var/lib/glance/images/
 
-
+sed -i '/\[database\]$/{n;s/.*/#/}' /etc/glance/glance-api.conf
 sed -i '/\[database\]$/a connection = mysql+pymysql://glance:GLANCE_DBPASS@127.0.0.1/glance' /etc/glance/glance-api.conf
 
 sed -i '/\[keystone_authtoken\]$/a password = GLANCE_PASS' /etc/glance/glance-api.conf

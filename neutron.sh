@@ -64,8 +64,8 @@ sed -i '/\[keystone_authtoken\]$/a auth_url = http://127.0.0.1:5000' /etc/neutro
 sed -i '/\[keystone_authtoken\]$/a www_authenticate_uri = http://127.0.0.1:5000' /etc/neutron/neutron.conf
 
 
-sed -i '/\[DEFAULT\]$/a notify_nova_on_port_status_changes = true' /etc/neutron/neutron.conf
-sed -i '/\[DEFAULT\]$/a notify_nova_on_port_data_changes = true' /etc/neutron/neutron.conf
+sed -i '/\[DEFAULT\]$/a notify_nova_on_port_status_changes = True' /etc/neutron/neutron.conf
+sed -i '/\[DEFAULT\]$/a notify_nova_on_port_data_changes = True' /etc/neutron/neutron.conf
 
 
 sed -i '/\[nova\]$/a password = NOVA_PASS' /etc/neutron/neutron.conf
@@ -145,3 +145,19 @@ service neutron-l3-agent restart
 
 
 # END - Install and configure controller node
+
+#######################################################
+# Install and configure compute node
+#######################################################
+
+# apt install neutron-linuxbridge-agent
+# sed -i '/\[database\]$/{n;s/.*/#/}' /etc/neutron/neutron.conf
+# sed -i '/\[database\]$/a transport_url = rabbit://openstack:RABBIT_PASS@127.0.0.1' /etc/neutron/neutron.conf 
+# Confuso ................ verificar na documentação se é necessario realizar essa etapa.... ja que substitui varios paramentros antes definidos...
+###############
+
+service nova-compute restart
+service neutron-linuxbridge-agent restart
+
+openstack extension list --network
+openstack network agent list
