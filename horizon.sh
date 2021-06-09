@@ -159,11 +159,11 @@ TIME_ZONE = "UTC"
 # Change this patch to the appropriate list of tuples containing
 # a key, label and static directory containing two files:
 # _variables.scss and _styles.scss
-#AVAILABLE_THEMES = [
-#    ('default', 'Default', 'themes/default'),
-#    ('material', 'Material', 'themes/material'),
-#    ('example', 'Example', 'themes/example'),
-#]
+AVAILABLE_THEMES = [
+   ('default', 'Default', 'themes/default'),
+   ('material', 'Material', 'themes/material'),
+   ('example', 'Example', 'themes/example'),
+]
 
 LOGGING = {
     'version': 1,
@@ -414,7 +414,7 @@ SECURITY_GROUP_RULES = {
 ###############################################################################
 
 # The default theme if no cookie is present
-DEFAULT_THEME = 'ubuntu'
+DEFAULT_THEME = 'default'
 
 # Default Ubuntu apache configuration uses /horizon as the application root.
 WEBROOT='/horizon/'

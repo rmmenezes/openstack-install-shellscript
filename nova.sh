@@ -174,11 +174,13 @@ sed -i '/\[keystone_authtoken\]$/a memcached_servers = 127.0.0.1:11211' /etc/nov
 sed -i '/\[keystone_authtoken\]$/a auth_url = http://127.0.0.1:5000' /etc/nova/nova.conf
 sed -i '/\[keystone_authtoken\]$/a www_authenticate_uri = http://127.0.0.1:5000' /etc/nova/nova.conf
 
-sed -i '/\[DEFAULT\]$/a my_ip = 127.0.0.1' /etc/nova/nova.conf
+# ESTA VARIAVEL %%my_ip%% deve conter o endereco ip estatico do servidor de controle
+sed -i '/\[DEFAULT\]$/a my_ip = 192.168.100.236' /etc/nova/nova.conf
 
-sed -i '/\[vnc\]$/a enabled = true' /etc/nova/nova.conf
+sed -i '/\[vnc\]$/a enabled = True' /etc/nova/nova.conf
 sed -i '/\[vnc\]$/a server_listen = $my_ip' /etc/nova/nova.conf
 sed -i '/\[vnc\]$/a server_proxyclient_address = $my_ip' /etc/nova/nova.conf
+sed -i '/\[vnc\]$/a novncproxy_base_url = http://$my_ip:6080/vnc_auto.html ' /etc/nova/nova.conf
 
 
 sed -i '/\[glance\]$/a api_servers = http://127.0.0.1:9292' /etc/nova/nova.conf
