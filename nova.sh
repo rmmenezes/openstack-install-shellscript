@@ -141,27 +141,6 @@ sed -i '/\[database\]$/a connection = mysql+pymysql://nova:NOVA_DBPASS@127.0.0.1
 sed -i '/\[DEFAULT\]$/{n;s/.*/#/}' /etc/nova/nova.conf
 sed -i '/\[DEFAULT\]$/a transport_url = rabbit://openstack:RABBIT_PASS@127.0.0.1:5672' /etc/nova/nova.conf
 
-
-#essa parte peguei deste link
-#https://openstack-xenserver.readthedocs.io/en/latest/06-install-compute-nova-on-controller.html
-# sed -i '/\[DEFAULT\]$/a rpc_backend = rabbit' /etc/nova/nova.conf
-# sed -i '/\[DEFAULT\]$/a auth_strategy = keystone' /etc/nova/nova.conf
-# sed -i '/\[DEFAULT\]$/a network_api_class = nova.network.neutronv2.api.API' /etc/nova/nova.conf
-# sed -i '/\[DEFAULT\]$/a security_group_api = neutron' /etc/nova/nova.conf
-# sed -i '/\[DEFAULT\]$/a linuxnet_interface_driver = nova.network.linux_net.NeutronLinuxBridgeInterfaceDriver' /etc/nova/nova.conf
-# sed -i '/\[DEFAULT\]$/a firewall_driver = nova.virt.firewall.NoopFirewallDriver' /etc/nova/nova.conf
-# sed -i '/\[DEFAULT\]$/a enabled_apis = osapi_compute,metadata' /etc/nova/nova.conf
-
-
-# sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_host = 127.0.0.1' /etc/nova/nova.conf
-# sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_userid = openstack' /etc/nova/nova.conf
-# sed -i '/\[oslo_messaging_rabbit\]$/a rabbit_password = *RABBIT_PASS*' /etc/nova/nova.conf
-  
-   
-# essa parte peguei deste link
-    
-
-
 sed -i '/\[api\]$/a auth_strategy = keystone' /etc/nova/nova.conf
 
 sed -i '/\[keystone_authtoken\]$/a password = NOVA_PASS' /etc/nova/nova.conf
@@ -174,8 +153,7 @@ sed -i '/\[keystone_authtoken\]$/a memcached_servers = 127.0.0.1:11211' /etc/nov
 sed -i '/\[keystone_authtoken\]$/a auth_url = http://127.0.0.1:5000' /etc/nova/nova.conf
 sed -i '/\[keystone_authtoken\]$/a www_authenticate_uri = http://127.0.0.1:5000' /etc/nova/nova.conf
 
-# ESTA VARIAVEL %%my_ip%% deve conter o endereco ip estatico do servidor de controle
-sed -i '/\[DEFAULT\]$/a my_ip = 192.168.100.236' /etc/nova/nova.conf
+sed -i '/\[DEFAULT\]$/a my_ip = 127.0.0.1' /etc/nova/nova.conf
 
 sed -i '/\[vnc\]$/a enabled = True' /etc/nova/nova.conf
 sed -i '/\[vnc\]$/a server_listen = $my_ip' /etc/nova/nova.conf
@@ -228,3 +206,12 @@ service nova-compute restart
 
 openstack compute service list --service nova-compute
 su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
+
+
+# Create flavors
+openstack flavor create --public m1.extra_tiny --id auto --ram 256 --disk 0 --vcpus 1 --rxtx-factor 1
+openstack flavor create --public m1.tiny --id auto --ram 512 --disk 0 --vcpus 1 --rxtx-factor 1
+openstack flavor create --public m1.small --id auto --ram 1024 --disk 0 --vcpus 1 --rxtx-factor 1
+openstack flavor create --public m1.medium --id auto --ram 2024 --disk 0 --vcpus 2 --rxtx-factor 1
+openstack flavor create --public m1.large --id auto --ram 4024 --disk 0 --vcpus 4 --rxtx-factor 1
+openstack flavor create --public m1.xlarge --id auto --ram 8024 --disk 0 --vcpus 8 --rxtx-factor 1
