@@ -1,16 +1,10 @@
 #!/bin/bash
 set -x #echo on
 
-################################################################
-#mysql -u root -p
-#	CREATE DATABASE glance;
-#	GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'GLANCE_DBPASS';
-#	GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'GLANCE_DBPASS';
-#	exit
+
 mysql --user="root" --password="password" --execute="CREATE DATABASE IF NOT EXISTS glance;"
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'GLANCE_DBPASS';"
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'GLANCE_DBPASS';"
-################################################################
 	
 apt install glance -y
 
@@ -22,38 +16,6 @@ export OS_PROJECT_DOMAIN_NAME=Default
 export OS_AUTH_URL=http://127.0.0.1:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
-
-# export OS_AUTH_URL=http://127.0.0.1:5000/v3
-
-
-##############################################################
-#sudo nano /etc/glance/glance-api.conf
-#
-#	[database]
-#	# ...
-#	connection = mysql+pymysql://glance:GLANCE_DBPASS@127.0.0.1/glance
-#	
-#	[keystone_authtoken]
-#	www_authenticate_uri = http://127.0.0.1:5000
-#	auth_url = http://127.0.0.1:5000
-#	memcached_servers = 127.0.0.1:11211
-#	auth_type = password
-#	project_domain_name = Default
-#	user_domain_name = Default
-#	project_name = service
-#	username = glance
-#	password = GLANCE_PASS
-#
-#
-#	[paste_deploy]
-#	# ...
-#	flavor = keystone
-#	
-#	[glance_store]
-#	# ...
-#	stores = file,http
-#	default_store = file
-#	filesystem_store_datadir = /var/lib/glance/images/
 
 sed -i '/\[database\]$/{n;s/.*/#/}' /etc/glance/glance-api.conf
 sed -i '/\[database\]$/a connection = mysql+pymysql://glance:GLANCE_DBPASS@127.0.0.1/glance' /etc/glance/glance-api.conf
