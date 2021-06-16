@@ -1,22 +1,9 @@
 #!/bin/bash
 set -x #echo on
 
-
-
-
-# INIT - Install and configure controller node
-
-################################################################
-#sudo mysql -u root -p
-#	CREATE DATABASE neutron;
-#	GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';
-#	GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';
-#	exit
-
 mysql --user="root" --password="password" --execute="CREATE DATABASE neutron;"
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';"
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';"
-#################################################################
 
 export OS_USERNAME=admin
 export OS_PASSWORD=ADMIN_PASS
@@ -34,10 +21,6 @@ openstack endpoint create --region RegionOne network public http://127.0.0.1:969
 openstack endpoint create --region RegionOne network internal http://127.0.0.1:9696
 openstack endpoint create --region RegionOne network admin http://127.0.0.1:9696
 
-###################################################################
-# Networking Option 1
-# https://docs.openstack.org/neutron/wallaby/install/controller-install-option1-ubuntu.html
-###################################################################
 
 hwclock --hctosys 
 apt-get update -y
@@ -91,12 +74,6 @@ sed -i '/\[ml2_type_flat\]$/a flat_networks = provider' /etc/neutron/plugins/ml2
 
 sed -i '/\[securitygroup\]$/a enable_ipset = true' /etc/neutron/plugins/ml2/ml2_conf.ini
 
-
-# Configure the Linux bridge agent
-
-# Replace PROVIDER_INTERFACE_NAME with the name of the underlying provider physical network interface. See Host networking for more information.
-
-# sed -i '/\[linux_bridge\]$/a physical_interface_mappings = provider:PROVIDER_INTERFACE_NAME' /etc/neutron/plugins/ml2/linuxbridge_agent.ini
 sed -i '/\[linux_bridge\]$/a physical_interface_mappings = provider:enp1s0' /etc/neutron/plugins/ml2/linuxbridge_agent.ini
 
 sed -i '/\[vxlan\]$/a enable_vxlan = false' /etc/neutron/plugins/ml2/linuxbridge_agent.ini
@@ -108,19 +85,9 @@ sed -i '/\[DEFAULT\]$/a interface_driver = linuxbridge' /etc/neutron/dhcp_agent.
 sed -i '/\[DEFAULT\]$/a dhcp_driver = neutron.agent.linux.dhcp.Dnsmasq' /etc/neutron/dhcp_agent.ini
 sed -i '/\[DEFAULT\]$/a enable_isolated_metadata = true' /etc/neutron/dhcp_agent.ini
 
-###################################################################
-# END
-# Networking Option 1
-# https://docs.openstack.org/neutron/wallaby/install/controller-install-option1-ubuntu.html
-###################################################################
-
-
-
-# Configure the metadata agent
 sed -i '/\[DEFAULT\]$/a nova_metadata_host = 127.0.0.1' /etc/neutron/metadata_agent.ini
 sed -i '/\[DEFAULT\]$/a metadata_proxy_shared_secret = METADATA_SECRET' /etc/neutron/metadata_agent.ini
 
-# Configure the Compute service to use the Networking service
 sed -i '/\[neutron\]$/a metadata_proxy_shared_secret = METADATA_SECRET' /etc/nova/nova.conf
 sed -i '/\[neutron\]$/a service_metadata_proxy = true' /etc/nova/nova.conf
 sed -i '/\[neutron\]$/a password = NEUTRON_PASS' /etc/nova/nova.conf
@@ -142,19 +109,6 @@ service neutron-dhcp-agent restart
 service neutron-metadata-agent restart
 
 service neutron-l3-agent restart
-
-
-# END - Install and configure controller node
-
-#######################################################
-# Install and configure compute node
-#######################################################
-
-# apt install neutron-linuxbridge-agent
-# sed -i '/\[database\]$/{n;s/.*/#/}' /etc/neutron/neutron.conf
-# sed -i '/\[database\]$/a transport_url = rabbit://openstack:RABBIT_PASS@127.0.0.1' /etc/neutron/neutron.conf 
-# Confuso ................ verificar na documentação se é necessario realizar essa etapa.... ja que substitui varios paramentros antes definidos...
-###############
 
 service nova-compute restart
 service neutron-linuxbridge-agent restart
