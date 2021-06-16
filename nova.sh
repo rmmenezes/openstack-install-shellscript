@@ -1,27 +1,10 @@
 #!/bin/bash
 set -x #echo on
 
-################################################################
-#sudo mysql -u root -p
-#   CREATE DATABASE nova_api;
-#   CREATE DATABASE nova;
-#   CREATE DATABASE nova_cell0;
-#	exit
 
 mysql --user="root" --password="password" --execute="CREATE DATABASE IF NOT EXISTS nova_api;"
 mysql --user="root" --password="password" --execute="CREATE DATABASE IF NOT EXISTS nova;"
 mysql --user="root" --password="password" --execute="CREATE DATABASE IF NOT EXISTS nova_cell0;"
-################################################################
-
-################################################################
-# GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';
-# GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';
-
-# GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';
-# GRANT ALL PRIVILEGES ON nova.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';
-
-# GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';
-# GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';
 
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';"
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON nova_api.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';"
@@ -31,7 +14,6 @@ mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON nov
 
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'localhost' IDENTIFIED BY 'NOVA_DBPASS';"
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON nova_cell0.* TO 'nova'@'%' IDENTIFIED BY 'NOVA_DBPASS';"
-################################################################
 
 export OS_USERNAME=admin
 export OS_PASSWORD=ADMIN_PASS
@@ -42,10 +24,6 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
 
-
-
-################################################################
-
 openstack user create --domain default --password NOVA_PASS nova
 openstack role add --project service --user nova admin
 openstack service create --name nova --description "OpenStack Compute" compute
@@ -54,52 +32,22 @@ openstack endpoint create --region RegionOne compute internal http://127.0.0.1:8
 openstack endpoint create --region RegionOne compute admin http://127.0.0.1:8774/v2.1
 
 
-
-
-
-
-
-
-
-
-
-
-# Install Placement service and configure user and endpoints:
-# https://docs.openstack.org/placement/wallaby/install/install-ubuntu.html#configure-user-and-endpoints
-
-
-################################################################
-#sudo mysql -u root -p
-#   CREATE DATABASE placement;
-#	exit
-
 mysql --user="root" --password="password" --execute="CREATE DATABASE IF NOT EXISTS placement;"
-################################################################
-
-
-################################################################
-# GRANT ALL PRIVILEGES ON placement.* TO 'placement'@'localhost' IDENTIFIED BY 'PLACEMENT_DBPASS';
-# GRANT ALL PRIVILEGES ON placement.* TO 'placement'@'%' IDENTIFIED BY 'PLACEMENT_DBPASS';
 
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON placement.* TO 'placement'@'localhost' IDENTIFIED BY 'PLACEMENT_DBPASS';"
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON placement.* TO 'placement'@'%' IDENTIFIED BY 'PLACEMENT_DBPASS';"
 
-################################################################
 
 openstack user create --domain default --password PLACEMENT_PASS placement
 openstack role add --project service --user placement admin
 openstack service create --name placement --description "Placement API" placement
 
-# http://127.0.0.1:9292
-
-# openstack endpoint create --region RegionOne placement public http://127.0.0.1:8778
-# openstack endpoint create --region RegionOne placement internal http://127.0.0.1:8778
-# openstack endpoint create --region RegionOne placement admin http://127.0.0.1:8778
 
 openstack endpoint create --region RegionOne placement public http://127.0.0.1:8778
 openstack endpoint create --region RegionOne placement internal http://127.0.0.1:8778
 openstack endpoint create --region RegionOne placement admin http://127.0.0.1:8778
 
+mkdir /home/placement
 apt install placement-api -y
 apt install python3-pip -y
 
@@ -116,7 +64,6 @@ sed -i '/\[keystone_authtoken\]$/a project_domain_name = Default' /etc/placement
 sed -i '/\[keystone_authtoken\]$/a auth_type = password' /etc/placement/placement.conf
 sed -i '/\[keystone_authtoken\]$/a memcached_servers = 127.0.0.1:11211' /etc/placement/placement.conf
 sed -i '/\[keystone_authtoken\]$/a auth_url = http://127.0.0.1:5000' /etc/placement/placement.conf
-# sed -i '/\[keystone_authtoken\]$/a auth_url = http://127.0.0.1:5000/v3' /etc/placement/placement.conf
 
 su -s /bin/sh -c "placement-manage db sync" placement
 service apache2 restart
@@ -124,11 +71,6 @@ service apache2 restart
 pip3 install osc-placement
 openstack --os-placement-api-version 1.2 resource class list --sort-column name
 openstack --os-placement-api-version 1.6 trait list --sort-column name
-
-
-#########################################################
-#                   Continuação                         #
-#########################################################
 
 apt install nova-api nova-conductor nova-novncproxy nova-scheduler -y
 
@@ -193,10 +135,6 @@ openstack compute service list
 openstack catalog list
 nova-status upgrade check
 
-
-####################################################################################################
-# https://docs.openstack.org/nova/wallaby/install/compute-install-ubuntu.html
-
 apt install nova-compute -y
 egrep -c '(vmx|svm)' /proc/cpuinfo
 
@@ -208,10 +146,4 @@ openstack compute service list --service nova-compute
 su -s /bin/sh -c "nova-manage cell_v2 discover_hosts --verbose" nova
 
 
-# Create flavors
 openstack flavor create --public m1.extra_tiny --id auto --ram 256 --disk 0 --vcpus 1 --rxtx-factor 1
-openstack flavor create --public m1.tiny --id auto --ram 512 --disk 0 --vcpus 1 --rxtx-factor 1
-openstack flavor create --public m1.small --id auto --ram 1024 --disk 0 --vcpus 1 --rxtx-factor 1
-openstack flavor create --public m1.medium --id auto --ram 2024 --disk 0 --vcpus 2 --rxtx-factor 1
-openstack flavor create --public m1.large --id auto --ram 4024 --disk 0 --vcpus 4 --rxtx-factor 1
-openstack flavor create --public m1.xlarge --id auto --ram 8024 --disk 0 --vcpus 8 --rxtx-factor 1
