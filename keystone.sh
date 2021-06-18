@@ -8,7 +8,7 @@ mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON key
 apt install keystone -y
 
 mv /etc/keystone/keystone.conf /etc/keystone/keystone.conf.original
-mv ./files/keystone/keystone.conf /etc/keystone/keystone.conf 
+cp ./files/keystone/keystone.conf /etc/keystone/keystone.conf 
 
 sudo su -s /bin/sh -c "keystone-manage db_sync" keystone
 keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone

@@ -54,7 +54,7 @@ apt install placement-api -y
 apt install python3-pip -y
 
 mv /etc/placement/placement.conf /etc/placement/placement.conf.original
-mv ./files/nova/placement.conf /etc/placement/placement.conf
+cp ./files/nova/placement.conf /etc/placement/placement.conf
 
 su -s /bin/sh -c "placement-manage db sync" placement
 service apache2 restart
@@ -66,7 +66,7 @@ openstack --os-placement-api-version 1.6 trait list --sort-column name
 apt install nova-api nova-conductor nova-novncproxy nova-scheduler -y
 
 mv /etc/nova/nova.conf /etc/nova/nova.conf.original
-mv ./files/nova/nova.conf /etc/nova/nova.conf
+cp ./files/nova/nova.conf /etc/nova/nova.conf
 
 su -s /bin/sh -c "nova-manage api_db sync" nova
 su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
@@ -89,7 +89,7 @@ apt install nova-compute -y
 egrep -c '(vmx|svm)' /proc/cpuinfo
 
 mv /etc/nova/nova-compute.conf /etc/nova/nova-compute.conf.original
-mv ./files/nova/nova-compute.conf etc/nova/nova-compute.conf
+cp ./files/nova/nova-compute.conf etc/nova/nova-compute.conf
 
 service nova-compute restart
 

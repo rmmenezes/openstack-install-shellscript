@@ -34,7 +34,7 @@ apt install cinder-api cinder-scheduler -y
 su -s /bin/sh -c "cinder-manage db sync" cinder
 
 mv /etc/cinder/cinder.conf /etc/cinder/cinder.conf.original
-mv ./files/glance/glance-api.conf /etc/cinder/cinder.conf
+cp ./files/glance/glance-api.conf /etc/cinder/cinder.conf
 
 service nova-api restart
 service cinder-scheduler restart

@@ -7,8 +7,8 @@ apt-get update -y
 apt-get upgrade -y
 
 # apt install python3-openstackclient -y (CLIENTE PARA UBUNTU!)
-apt install python3-pip
-pip install python-openstackclient
+apt install python3-pip -y
+pip install python-openstackclient -y
 
 apt install nova-compute -y
 
@@ -52,12 +52,12 @@ service mysql restart
 
 
 #----------------------------------------------------
-#sudo mysql_secure_installation
+sudo mysql_secure_installation
 
 # Abaixo alternativa silenciosa para o comando acima
 
 # Make sure that NOBODY can access the server without a password
-mysql -e "UPDATE mysql.user SET Password = PASSWORD('password') WHERE User = 'root'"
+# mysql -e "UPDATE mysql.user SET Password = PASSWORD('password') WHERE User = 'root'"
 # Kill the anonymous users
 # mysql -e "DROP USER ''@'localhost'"
 # Because our hostname varies we'll use some Bash magic here.
@@ -65,6 +65,6 @@ mysql -e "UPDATE mysql.user SET Password = PASSWORD('password') WHERE User = 'ro
 # Kill off the demo database
 # sudo mysql -e "DROP DATABASE test"
 # Make our changes take effect
-mysql -e "FLUSH PRIVILEGES"
+# mysql -e "FLUSH PRIVILEGES"
 # Any subsequent tries to run queries this way will get access denied because lack of usr/pwd param
 #----------------------------------------------------
