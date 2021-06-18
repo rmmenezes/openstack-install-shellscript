@@ -8,7 +8,7 @@ apt-get upgrade -y
 
 # apt install python3-openstackclient -y (CLIENTE PARA UBUNTU!)
 apt install python3-pip -y
-pip install python-openstackclient -y
+pip install python-openstackclient
 
 apt install nova-compute -y
 

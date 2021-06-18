@@ -49,6 +49,16 @@ openstack endpoint create --region RegionOne placement public http://127.0.0.1:8
 openstack endpoint create --region RegionOne placement internal http://127.0.0.1:8778
 openstack endpoint create --region RegionOne placement admin http://127.0.0.1:8778
 
+apt install qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools genisoimage virtinst libosinfo-bin -y
+
+# Add usuario Nova no grupo libvirt
+adduser nova libvirt
+adduser nova libvirt-qemu
+
+# Atualiza os grupos
+newgrp libvirt
+newgrp libvirt-qemu
+
 mkdir /home/placement
 apt install placement-api -y
 apt install python3-pip -y
@@ -89,7 +99,7 @@ apt install nova-compute -y
 egrep -c '(vmx|svm)' /proc/cpuinfo
 
 mv /etc/nova/nova-compute.conf /etc/nova/nova-compute.conf.original
-cp ./files/nova/nova-compute.conf etc/nova/nova-compute.conf
+cp ./files/nova/nova-compute.conf /etc/nova/nova-compute.conf
 
 service nova-compute restart
 
