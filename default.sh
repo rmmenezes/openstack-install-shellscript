@@ -2,28 +2,24 @@
 set -x #echo on
 
 
-echo executando comandos..
-################################################################
-
-add-apt-repository cloud-archive:wallaby -y
+# add-apt-repository cloud-archive:wallaby -y (PARA UBUNTU)
 apt-get update -y 
 apt-get upgrade -y
-apt install python3-openstackclient -y
+
+# apt install python3-openstackclient -y (CLIENTE PARA UBUNTU!)
+apt install python3-pip
+pip install python-openstackclient
+
 apt install nova-compute -y
 
-################################################################
 apt install rabbitmq-server -y
 rabbitmqctl add_user openstack RABBIT_PASS
 rabbitmqctl set_permissions openstack ".*" ".*" ".*"
 
-################################################################
 apt install memcached python3-memcache -y
-#sudo nano /etc/memcached.conf
 service memcached restart
 
-################################################################
 apt install etcd -y
-
 cat >> /etc/default/etcd << EOF
 ETCD_NAME="controller"
 ETCD_DATA_DIR="/var/lib/etcd"
@@ -39,7 +35,6 @@ EOF
 systemctl enable etcd
 systemctl restart etcd
 
-################################################################
 apt install mariadb-server python3-pymysql -y
 touch /etc/mysql/mariadb.conf.d/99-openstack.cnf
 cat >> /etc/mysql/mariadb.conf.d/99-openstack.cnf << EOF
