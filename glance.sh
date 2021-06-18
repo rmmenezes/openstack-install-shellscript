@@ -17,26 +17,8 @@ export OS_AUTH_URL=http://127.0.0.1:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
 
-sed -i '/\[database\]$/{n;s/.*/#/}' /etc/glance/glance-api.conf
-sed -i '/\[database\]$/a connection = mysql+pymysql://glance:GLANCE_DBPASS@127.0.0.1/glance' /etc/glance/glance-api.conf
-
-sed -i '/\[keystone_authtoken\]$/a password = GLANCE_PASS' /etc/glance/glance-api.conf
-sed -i '/\[keystone_authtoken\]$/a username = glance' /etc/glance/glance-api.conf
-sed -i '/\[keystone_authtoken\]$/a project_name = service' /etc/glance/glance-api.conf
-sed -i '/\[keystone_authtoken\]$/a user_domain_name = Default' /etc/glance/glance-api.conf
-sed -i '/\[keystone_authtoken\]$/a project_domain_name = Default' /etc/glance/glance-api.conf
-sed -i '/\[keystone_authtoken\]$/a auth_type = password' /etc/glance/glance-api.conf
-sed -i '/\[keystone_authtoken\]$/a memcached_servers = 127.0.0.1:11211' /etc/glance/glance-api.conf
-sed -i '/\[keystone_authtoken\]$/a auth_url = http://127.0.0.1:5000' /etc/glance/glance-api.conf
-sed -i '/\[keystone_authtoken\]$/a www_authenticate_uri = http://127.0.0.1:5000' /etc/glance/glance-api.conf
-
-	
-sed -i '/\[paste_deploy\]$/a flavor = keystone' /etc/glance/glance-api.conf
-
-sed -i '/\[glance_store\]$/a stores = file,http' /etc/glance/glance-api.conf
-sed -i '/\[glance_store\]$/a default_store = file ' /etc/glance/glance-api.conf
-sed -i '/\[glance_store\]$/a filesystem_store_datadir = /var/lib/glance/images/' /etc/glance/glance-api.conf
-
+mv /etc/glance/glance-api.conf /etc/glance/glance-api.conf.original
+mv ./files/glance/glance-api.conf /etc/glance/glance-api.conf
 
 su -s /bin/sh -c "glance-manage db_sync" glance
 service glance-api restart

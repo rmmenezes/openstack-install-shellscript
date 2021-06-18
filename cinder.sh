@@ -33,54 +33,8 @@ openstack endpoint create --region RegionOne volumev3 admin http://127.0.0.1:877
 apt install cinder-api cinder-scheduler -y
 su -s /bin/sh -c "cinder-manage db sync" cinder
 
-sed -i '/\[cinder\]$/a os_region_name = RegionOne' /etc/nova/nova.conf
-
-#Lembre que o simbolo '$' aqui deve ser acompanhado com '\' para aparecer!!
-cat > /etc/cinder/cinder.conf << EOF
-[DEFAULT]
-# define own IP address
-my_ip = 127.0.0.1
-rootwrap_config = /etc/cinder/rootwrap.conf
-api_paste_confg = /etc/cinder/api-paste.ini
-state_path = /var/lib/cinder
-auth_strategy = keystone
-# RabbitMQ connection info
-transport_url = rabbit://openstack:RABBIT_PASS@127.0.0.1
-enable_v3_api = True
-glance_api_servers = http://127.0.0.1:9292
-# OK with empty value now
-enabled_backends = lvm
-
-# MariaDB connection info
-[database]
-connection = mysql+pymysql://cinder:CINDER_DBPASS@127.0.0.1/cinder
-
-# Keystone auth info
-[keystone_authtoken]
-www_authenticate_uri = http://127.0.0.1:5000
-auth_url = http://127.0.0.1:5000
-memcached_servers = 127.0.0.1:11211
-auth_type = password
-project_domain_name = Default
-user_domain_name = Default
-project_name = service
-username = cinder
-password = CINDER_PASS
-
-[oslo_concurrency]
-lock_path = \$state_path/tmp
-
-# add to the end
-[lvm]
-target_helper = lioadm
-target_protocol = iscsi
-# IP address of Storage Node
-target_ip_address = 127.0.0.1
-# volume group name created on [1]
-volume_group = cinder-volumes
-volume_driver = cinder.volume.drivers.lvm.LVMVolumeDriver
-#volumes_dir = \$state_path/volumes
-EOF
+mv /etc/cinder/cinder.conf /etc/cinder/cinder.conf.original
+mv ./files/glance/glance-api.conf /etc/cinder/cinder.conf
 
 service nova-api restart
 service cinder-scheduler restart

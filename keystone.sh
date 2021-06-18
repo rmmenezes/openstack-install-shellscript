@@ -7,8 +7,8 @@ mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON key
 
 apt install keystone -y
 
-sed -i '/\[database\]$/a connection = mysql+pymysql://keystone:KEYSTONE_DBPASS@127.0.0.1/keystone' /etc/keystone/keystone.conf 
-sed -i '/\[token\]$/a provider = fernet' /etc/keystone/keystone.conf 
+mv /etc/keystone/keystone.conf /etc/keystone/keystone.conf.original
+mv ./files/keystone/keystone.conf /etc/keystone/keystone.conf 
 
 sudo su -s /bin/sh -c "keystone-manage db_sync" keystone
 keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
