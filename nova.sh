@@ -65,6 +65,7 @@ apt install python3-pip -y
 
 mv /etc/placement/placement.conf /etc/placement/placement.conf.original
 cp ./files/nova/placement.conf /etc/placement/placement.conf
+chgrp placement /etc/placement/placement.conf
 
 su -s /bin/sh -c "placement-manage db sync" placement
 service apache2 restart
@@ -77,6 +78,7 @@ apt install nova-api nova-conductor nova-novncproxy nova-scheduler -y
 
 mv /etc/nova/nova.conf /etc/nova/nova.conf.original
 cp ./files/nova/nova.conf /etc/nova/nova.conf
+chgrp nova /etc/nova/nova.conf
 
 su -s /bin/sh -c "nova-manage api_db sync" nova
 su -s /bin/sh -c "nova-manage cell_v2 map_cell0" nova
@@ -100,6 +102,7 @@ egrep -c '(vmx|svm)' /proc/cpuinfo
 
 mv /etc/nova/nova-compute.conf /etc/nova/nova-compute.conf.original
 cp ./files/nova/nova-compute.conf /etc/nova/nova-compute.conf
+chgrp nova /etc/nova/nova-compute.conf
 
 service nova-compute restart
 

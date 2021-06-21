@@ -9,6 +9,7 @@ apt install keystone -y
 
 mv /etc/keystone/keystone.conf /etc/keystone/keystone.conf.original
 cp ./files/keystone/keystone.conf /etc/keystone/keystone.conf 
+chgrp glance /etc/keystone/keystone.conf 
 
 sudo su -s /bin/sh -c "keystone-manage db_sync" keystone
 keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
