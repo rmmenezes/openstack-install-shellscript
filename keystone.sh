@@ -1,7 +1,7 @@
 #!/bin/bash
 set -x #echo on
 
-ip_database = "127.0.0.1"
+ip_database="127.0.0.1"
 
 mysql --user="openstack" --password="password" -h $ip_database --execute="CREATE DATABASE IF NOT EXISTS keystone;"
 mysql --user="openstack" --password="password" -h $ip_database --execute="GRANT ALL PRIVILEGES ON keystone.* TO 'keystone'@'localhost' IDENTIFIED BY 'KEYSTONE_DBPASS';"

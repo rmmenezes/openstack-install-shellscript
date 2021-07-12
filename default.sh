@@ -56,7 +56,7 @@ sudo mysql_secure_installation
 
 # Cria o usuario para ser acessado remotamente
 mysql --user="root" --password="password" --execute="CREATE USER 'openstack'@'localhost' IDENTIFIED BY 'password';"
-mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON * . * TO 'openstack'@'localhost';"
+mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON *.* TO 'openstack'@'localhost' WITH GRANT OPTION;"
 mysql --user="root" --password="password" --execute="FLUSH PRIVILEGES;"
 
 # Abaixo alternativa silenciosa para o comando acima

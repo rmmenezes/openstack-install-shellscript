@@ -1,11 +1,11 @@
 #!/bin/bash
 set -x #echo on
 
-ip_database = "127.0.0.1"
+ip_database="127.0.0.1"
 
-mysql --user="openstack" --host $ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS glance;"
-mysql --user="openstack" --host $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'GLANCE_DBPASS';"
-mysql --user="openstack" --host $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'GLANCE_DBPASS';"
+mysql --user="openstack" -h $ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS glance;"
+mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'GLANCE_DBPASS';"
+mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'GLANCE_DBPASS';"
 	
 apt install glance -y
 

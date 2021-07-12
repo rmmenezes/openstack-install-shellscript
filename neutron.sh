@@ -1,11 +1,11 @@
 #!/bin/bash
 set -x #echo on
 
-ip_database = "127.0.0.1"
+ip_database="127.0.0.1"
 
-mysql --user="openstack" --host $ip_database --password="password" --execute="CREATE DATABASE neutron;"
-mysql --user="openstack" --host $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';"
-mysql --user="openstack" --host $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';"
+mysql --user="openstack" -h $ip_database --password="password" --execute="CREATE DATABASE neutron;"
+mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';"
+mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';"
 
 export OS_USERNAME=admin
 export OS_PASSWORD=ADMIN_PASS
