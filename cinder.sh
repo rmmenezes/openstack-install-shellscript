@@ -1,11 +1,12 @@
 #!/bin/bash
 set -x #echo on
 
-# ANTES, CIRAR UM NOVO DISCO E ADICIONAR A VM NO VIRT_MANANGER!!!!
+ip_database = "127.0.0.1"
 
-mysql --user="root" --password="password" --execute="CREATE DATABASE IF NOT EXISTS cinder;"
-mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY 'CINDER_DBPASS';"
-mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY 'CINDER_DBPASS';"
+# ANTES, CIRAR UM NOVO DISCO E ADICIONAR A VM NO VIRT_MANANGER!!!!
+mysql --user="openstack" --host $ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS cinder;"
+mysql --user="openstack" --host $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY 'CINDER_DBPASS';"
+mysql --user="openstack" --host $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY 'CINDER_DBPASS';"
 	
 export OS_USERNAME=admin
 export OS_PASSWORD=ADMIN_PASS

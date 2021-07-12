@@ -54,6 +54,11 @@ service mysql restart
 #----------------------------------------------------
 sudo mysql_secure_installation
 
+# Cria o usuario para ser acessado remotamente
+mysql --user="root" --password="password" --host localhost --execute="CREATE USER 'openstack'@'localhost' IDENTIFIED BY 'password';"
+mysql --user="root" --password="password" --host localhost --execute="GRANT ALL PRIVILEGES ON * . * TO 'openstack'@'localhost';"
+mysql --user="root" --password="password" --host localhost --execute="FLUSH PRIVILEGES;"
+
 # Abaixo alternativa silenciosa para o comando acima
 
 # Make sure that NOBODY can access the server without a password
