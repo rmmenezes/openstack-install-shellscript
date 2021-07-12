@@ -58,10 +58,12 @@ service mysql restart
 sudo mysql_secure_installation
 
 # Cria o usuario para ser acessado remotamente
-mysql --user="root" --password="password" --execute="CREATE USER 'openstack'@'localhost' IDENTIFIED BY 'password';"
-mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON *.* TO 'openstack'@'localhost' WITH GRANT OPTION;"
+mysql --user="root" --password="password" --execute="CREATE USER 'openstack'@'keystone' IDENTIFIED BY 'password';"
+mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON *.* TO 'openstack'@'keystone' WITH GRANT OPTION;"
 mysql --user="root" --password="password" --execute="FLUSH PRIVILEGES;"
 
+sudo DEBIAN_FRONTEND=noninteractive apt instll iptables-persistent -yq
+iptables -A INPUT -i enp1s0 -p tcp --destination-port 3306 -j ACCEPT
 # Abaixo alternativa silenciosa para o comando acima
 
 # Make sure that NOBODY can access the server without a password
