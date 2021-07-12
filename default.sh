@@ -10,7 +10,7 @@ apt-get upgrade -y
 apt install python3-pip -y
 pip install python-openstackclient
 
-apt install nova-compute -y
+#apt install nova-compute -y
 
 apt install rabbitmq-server -y
 rabbitmqctl add_user openstack RABBIT_PASS
