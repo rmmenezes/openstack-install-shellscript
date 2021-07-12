@@ -20,7 +20,7 @@ apt install memcached python3-memcache -y
 service memcached restart
 
 apt install etcd -y
-cat >> /etc/default/etcd << EOF
+cat > /etc/default/etcd << EOF
 ETCD_NAME="controller"
 ETCD_DATA_DIR="/var/lib/etcd"
 ETCD_INITIAL_CLUSTER_STATE="new"
@@ -37,7 +37,7 @@ systemctl restart etcd
 
 apt install mariadb-server python3-pymysql -y
 touch /etc/mysql/mariadb.conf.d/99-openstack.cnf
-cat >> /etc/mysql/mariadb.conf.d/99-openstack.cnf << EOF
+cat > /etc/mysql/mariadb.conf.d/99-openstack.cnf << EOF
 [mysqld]
 bind-address = 0.0.0.0 
 
