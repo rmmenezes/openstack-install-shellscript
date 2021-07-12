@@ -6,11 +6,14 @@ set -x #echo on
 apt-get update -y 
 apt-get upgrade -y
 
+# Arquivo de hosts (DNS)
+mv /etc/hosts /etc/hosts.original
+cp ./files/hosts /etc/hosts 
+chgrp root /etc/hosts 
+
 # apt install python3-openstackclient -y (CLIENTE PARA UBUNTU!)
 apt install python3-pip -y
 pip install python-openstackclient
-
-#apt install nova-compute -y
 
 apt install rabbitmq-server -y
 rabbitmqctl add_user openstack RABBIT_PASS
