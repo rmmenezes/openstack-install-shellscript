@@ -25,9 +25,10 @@ service mysql restart
 #----------------------------------------------------
 sudo mysql_secure_installation
 
+#Documentação: https://stackoverflow.com/questions/19101243/error-1130-hy000-host-is-not-allowed-to-connect-to-this-mysql-server
 # Cria o usuario para ser acessado remotamente
-mysql --user="root" --password="password" --execute="CREATE USER 'openstack'@'ip_database' IDENTIFIED BY 'password';"
-mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON *.* TO 'openstack'@'ip_database' WITH GRANT OPTION;"
+mysql --user="root" --password="password" --execute="CREATE USER 'openstack'@'%' IDENTIFIED BY 'password';"
+mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON *.* TO 'openstack'@'%';"
 mysql --user="root" --password="password" --execute="FLUSH PRIVILEGES;"
 
 sudo DEBIAN_FRONTEND=noninteractive apt install iptables-persistent -yq
