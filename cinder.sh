@@ -1,19 +1,17 @@
 #!/bin/bash
 set -x #echo on
 
-ip_database="127.0.0.1"
-
 # ANTES, CIRAR UM NOVO DISCO E ADICIONAR A VM NO VIRT_MANANGER!!!!
-mysql --user="openstack" -h $ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS cinder;"
-mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'localhost' IDENTIFIED BY 'CINDER_DBPASS';"
-mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY 'CINDER_DBPASS';"
+mysql --user="openstack" -h ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS cinder;"
+mysql --user="openstack" -h ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'ip_database' IDENTIFIED BY 'CINDER_DBPASS';"
+mysql --user="openstack" -h ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON cinder.* TO 'cinder'@'%' IDENTIFIED BY 'CINDER_DBPASS';"
 	
 export OS_USERNAME=admin
 export OS_PASSWORD=ADMIN_PASS
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_DOMAIN_NAME=Default
-export OS_AUTH_URL=http://127.0.0.1:5000/v3
+export OS_AUTH_URL=http://keystone:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
 
