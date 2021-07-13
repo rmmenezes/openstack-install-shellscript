@@ -17,7 +17,7 @@ keystone-manage fernet_setup --keystone-user keystone --keystone-group keystone
 keystone-manage credential_setup --keystone-user keystone --keystone-group keystone
 
 
-keystone-manage bootstrap --bootstrap-password ADMIN_PASS --bootstrap-admin-url http://127.0.0.1:5000/v3/ --bootstrap-internal-url http://127.0.0.1:5000/v3/ --bootstrap-public-url http://127.0.0.1:5000/v3/ --bootstrap-region-id RegionOne
+keystone-manage bootstrap --bootstrap-password ADMIN_PASS --bootstrap-admin-url http://keystone:5000/v3/ --bootstrap-internal-url http://keystone:5000/v3/ --bootstrap-public-url http://keystone:5000/v3/ --bootstrap-region-id RegionOne
   
 service apache2 restart
 
@@ -26,7 +26,7 @@ export OS_PASSWORD=ADMIN_PASS
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_DOMAIN_NAME=Default
-export OS_AUTH_URL=http://127.0.0.1:5000/v3
+export OS_AUTH_URL=http://keystone:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
 
