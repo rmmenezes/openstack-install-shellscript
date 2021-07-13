@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x #echo on
+echo "cinder" > /etc/hostname
 
 # ANTES, CIRAR UM NOVO DISCO E ADICIONAR A VM NO VIRT_MANANGER!!!!
 mysql --user="openstack" -h ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS cinder;"

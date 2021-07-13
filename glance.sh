@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x #echo on
+echo "glance" > /etc/hostname
 
 mysql --user="openstack" -h ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS glance;"
 mysql --user="openstack" -h ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'ip_database' IDENTIFIED BY 'GLANCE_DBPASS';"

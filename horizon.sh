@@ -1,5 +1,6 @@
 #!/bin/bash
 set -x #echo on
+echo "horizon" > /etc/hostname
 
 apt install openstack-dashboard -y
 

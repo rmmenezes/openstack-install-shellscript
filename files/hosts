@@ -5,8 +5,8 @@
 192.168.122.85      keystone
 192.168.122.34      glance
 192.168.122.136     nova
-192.168.122.10     neutron
-#192.168.122.101     cinder
-#192.168.122.101     horizon
+192.168.122.167     neutron
+192.168.122.15      horizon
+#192.168.122.101    cinder
 # -- Edit Here -- #
-# https://github.com/rmmenezes/openstack-install-shellscript
+# git clone https://github.com/rmmenezes/openstack-install-shellscript
