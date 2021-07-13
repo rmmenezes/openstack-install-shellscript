@@ -1,18 +1,16 @@
 #!/bin/bash
 set -x #echo on
 
-ip_database="127.0.0.1"
-
-mysql --user="openstack" -h $ip_database --password="password" --execute="CREATE DATABASE neutron;"
-mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';"
-mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';"
+mysql --user="openstack" -h ip_database --password="password" --execute="CREATE DATABASE neutron;"
+mysql --user="openstack" -h ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'ip_database' IDENTIFIED BY 'NEUTRON_DBPASS';"
+mysql --user="openstack" -h ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';"
 
 export OS_USERNAME=admin
 export OS_PASSWORD=ADMIN_PASS
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_DOMAIN_NAME=Default
-export OS_AUTH_URL=http://127.0.0.1:5000/v3
+export OS_AUTH_URL=http://keystone:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
 
