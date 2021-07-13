@@ -29,9 +29,9 @@ export OS_TENANT_NAME=admin
 openstack user create --domain default --password NOVA_PASS nova
 openstack role add --project service --user nova admin
 openstack service create --name nova --description "OpenStack Compute" compute
-openstack endpoint create --region RegionOne compute public http://127.0.0.1:8774/v2.1
-openstack endpoint create --region RegionOne compute internal http://127.0.0.1:8774/v2.1
-openstack endpoint create --region RegionOne compute admin http://127.0.0.1:8774/v2.1
+openstack endpoint create --region RegionOne compute public http://nova:8774/v2.1
+openstack endpoint create --region RegionOne compute internal http://nova:8774/v2.1
+openstack endpoint create --region RegionOne compute admin http://nova:8774/v2.1
 
 
 mysql --user="openstack" -h ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS placement;"
@@ -44,9 +44,9 @@ openstack role add --project service --user placement admin
 openstack service create --name placement --description "Placement API" placement
 
 
-openstack endpoint create --region RegionOne placement public http://127.0.0.1:8778
-openstack endpoint create --region RegionOne placement internal http://127.0.0.1:8778
-openstack endpoint create --region RegionOne placement admin http://127.0.0.1:8778
+openstack endpoint create --region RegionOne placement public http://nova:8778
+openstack endpoint create --region RegionOne placement internal http://nova:8778
+openstack endpoint create --region RegionOne placement admin http://nova:8778
 
 apt install qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools genisoimage virtinst libosinfo-bin -y
 
