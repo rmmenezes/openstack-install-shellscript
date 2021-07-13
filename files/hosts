@@ -2,7 +2,7 @@
 
 # -- Edit Here -- #
 192.168.122.56      ip_database
-192.168.122.85      keystone
+192.168.122.199      keystone
 192.168.122.34      glance
 192.168.122.153     nova
 192.168.122.167     neutron
