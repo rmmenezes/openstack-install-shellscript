@@ -10,7 +10,7 @@ apt install mariadb-server python3-pymysql -y
 touch /etc/mysql/mariadb.conf.d/99-openstack.cnf
 cat > /etc/mysql/mariadb.conf.d/99-openstack.cnf << EOF
 [mysqld]
-bind-address = 0.0.0.0 
+bind-address = 0.0.0.0
 
 default-storage-engine = innodb
 innodb_file_per_table = on
@@ -21,7 +21,6 @@ EOF
 
 service mysql restart
 
-
 #----------------------------------------------------
 sudo mysql_secure_installation
 
@@ -31,5 +30,12 @@ mysql --user="root" --password="password" --execute="CREATE USER 'openstack'@'%'
 mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON *.* TO 'openstack'@'%' WITH GRANT OPTION;"
 mysql --user="root" --password="password" --execute="FLUSH PRIVILEGES;"
 
+sed -i '/bind-address            = 127.0.0.1/d' /etc/mysql/mariadb.conf.d/50-server.cnf
+sed -i '/\[mysqld\]$/a bind-address            = 0.0.0.0' /etc/mysql/mariadb.conf.d/50-server.cnf
+
 sudo DEBIAN_FRONTEND=noninteractive apt install iptables-persistent -yq
 iptables -A INPUT -i enp1s0 -p tcp --destination-port 3306 -j ACCEPT
+
+service mysql restart
+sudo systemctl restart mysql
+sudo systemctl restart mariadb

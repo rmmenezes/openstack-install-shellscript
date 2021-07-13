@@ -1,11 +1,9 @@
 #!/bin/bash
 set -x #echo on
 
-ip_database="127.0.0.1"
-
-mysql --user="openstack" -h $ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS glance;"
-mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'localhost' IDENTIFIED BY 'GLANCE_DBPASS';"
-mysql --user="openstack" -h $ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'GLANCE_DBPASS';"
+mysql --user="openstack" -h ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS glance;"
+mysql --user="openstack" -h ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'ip_database' IDENTIFIED BY 'GLANCE_DBPASS';"
+mysql --user="openstack" -h ip_database --password="password" --execute="GRANT ALL PRIVILEGES ON glance.* TO 'glance'@'%' IDENTIFIED BY 'GLANCE_DBPASS';"
 	
 apt install glance -y
 
@@ -14,7 +12,7 @@ export OS_PASSWORD=ADMIN_PASS
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_DOMAIN_NAME=Default
-export OS_AUTH_URL=http://127.0.0.1:5000/v3
+export OS_AUTH_URL=http://keystone:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
 
