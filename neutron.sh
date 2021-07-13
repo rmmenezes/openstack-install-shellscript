@@ -52,8 +52,6 @@ chgrp neutron /etc/neutron/metadata_agent.ini
 
 su -s /bin/sh -c "neutron-db-manage --config-file /etc/neutron/neutron.conf --config-file /etc/neutron/plugins/ml2/ml2_conf.ini upgrade head" neutron
 
-service nova-api restart
-
 service neutron-server restart
 service neutron-linuxbridge-agent restart
 service neutron-dhcp-agent restart
@@ -61,7 +59,6 @@ service neutron-metadata-agent restart
 
 service neutron-l3-agent restart
 
-service nova-compute restart
 service neutron-linuxbridge-agent restart
 
 openstack extension list --network

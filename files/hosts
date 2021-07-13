@@ -2,11 +2,28 @@
 
 # -- Edit Here -- #
 192.168.122.56      ip_database
-192.168.122.199      keystone
+192.168.122.199     keystone
 192.168.122.34      glance
 192.168.122.153     nova
 192.168.122.167     neutron
 192.168.122.15      horizon
 #192.168.122.101    cinder
 # -- Edit Here -- #
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 # git clone https://github.com/rmmenezes/openstack-install-shellscript
