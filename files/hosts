@@ -12,4 +12,4 @@
 
 
 
-# git clone https://github.com/rmmenezes/openstack-install-shellscript
+# git clone https://github.com/rmmenezes/openstack-install-shellscript && cd openstack-install-shellscript/ && chmod 777 *.sh && ./debian_update.sh && ./default.sh

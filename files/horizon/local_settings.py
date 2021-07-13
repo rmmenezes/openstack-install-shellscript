@@ -132,7 +132,7 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 #EMAIL_HOST_USER = 'djangomail'
 #EMAIL_HOST_PASSWORD = 'top-secret!'
 
-OPENSTACK_KEYSTONE_URL = "http://keystone:5000/v3" % OPENSTACK_HOST
+OPENSTACK_KEYSTONE_URL = "http://keystone:5000/v3"
 OPENSTACK_KEYSTONE_MULTIDOMAIN_SUPPORT = True
 OPENSTACK_API_VERSIONS = {
     "identity": 3,
