@@ -37,7 +37,7 @@ cp ./files/cinder/cinder.conf /etc/cinder/cinder.conf
 chgrp cinder /etc/cinder/cinder.conf
 
 su -s /bin/sh -c "cinder-manage db sync" cinder
-service cinder-scheduler restart
+systemctl restart cinder-scheduler
 openstack volume service list
 
 apt install lvm2 thin-provisioning-tools -y
@@ -49,4 +49,4 @@ vgcreate cinder-volumes /dev/vdb
 sed -i '/devices {$/a filter = [ "a/vdb/", "r/.*/"]' /etc/lvm/lvm.conf
 
 apt install cinder-volume -y
-service cinder-volume restart
+systemctl restart cinder-volume
