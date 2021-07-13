@@ -48,6 +48,7 @@ openstack endpoint create --region RegionOne placement public http://nova:8778
 openstack endpoint create --region RegionOne placement internal http://nova:8778
 openstack endpoint create --region RegionOne placement admin http://nova:8778
 
+apt install nova-compute -y
 apt install qemu-kvm libvirt-clients libvirt-daemon-system bridge-utils libguestfs-tools genisoimage virtinst libosinfo-bin -y
 
 # Add usuario Nova no grupo libvirt
