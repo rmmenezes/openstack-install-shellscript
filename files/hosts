@@ -1,13 +1,13 @@
 127.0.0.1	localhost
 
 # -- Edit Here -- #
-192.168.90.42     ip_database
-192.168.90.32     keystone
-192.168.90.193    glance
-192.168.90.130    nova
-192.168.90.252    neutron
-192.168.90.226    cinder
-192.168.90.212    horizon
+192.168.90.197    ip_database
+192.168.90.70     keystone
+#192.168.90.193    glance
+#192.168.90.130    nova
+#192.168.90.252    neutron
+#192.168.90.226    cinder
+#192.168.90.212    horizon
 # -- Edit Here -- #
 
 
