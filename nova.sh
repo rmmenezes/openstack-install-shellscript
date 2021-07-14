@@ -1,6 +1,5 @@
 #!/bin/bash
 set -x #echo on
-echo "nova" > /etc/hostname
 
 mysql --user="openstack" -h ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS nova_api;"
 mysql --user="openstack" -h ip_database --password="password" --execute="CREATE DATABASE IF NOT EXISTS nova;"

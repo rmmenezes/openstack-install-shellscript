@@ -1,7 +1,6 @@
 #!/bin/bash
 set -x #echo on
 
-echo "ip_database" > /etc/hostname
 
 # Arquivo de hosts (DNS)
 mv /etc/hosts /etc/hosts.original
