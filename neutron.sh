@@ -1,25 +1,25 @@
 #!/bin/bash
 set -x #echo on
 
-mysql --user="openstack" --password="password" -h ip_database --execute="CREATE DATABASE neutron;"
-mysql --user="openstack" --password="password" -h ip_database --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';"
-mysql --user="openstack" --password="password" -h ip_database --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';"
+mysql --user="root" --password="password" --execute="CREATE DATABASE neutron;"
+mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'localhost' IDENTIFIED BY 'NEUTRON_DBPASS';"
+mysql --user="root" --password="password" --execute="GRANT ALL PRIVILEGES ON neutron.* TO 'neutron'@'%' IDENTIFIED BY 'NEUTRON_DBPASS';"
 
 export OS_USERNAME=admin
 export OS_PASSWORD=ADMIN_PASS
 export OS_PROJECT_NAME=admin
 export OS_USER_DOMAIN_NAME=Default
 export OS_PROJECT_DOMAIN_NAME=Default
-export OS_AUTH_URL=http://keystone:5000/v3
+export OS_AUTH_URL=http://127.0.0.1:5000/v3
 export OS_IDENTITY_API_VERSION=3
 export OS_TENANT_NAME=admin
 
 openstack user create --domain default --password NEUTRON_PASS neutron
 openstack role add --project service --user neutron admin
 openstack service create --name neutron --description "OpenStack Networking" network
-openstack endpoint create --region RegionOne network public http://neutron:9696
-openstack endpoint create --region RegionOne network internal http://neutron:9696
-openstack endpoint create --region RegionOne network admin http://neutron:9696
+openstack endpoint create --region RegionOne network public http://127.0.0.1:9696
+openstack endpoint create --region RegionOne network internal http://127.0.0.1:9696
+openstack endpoint create --region RegionOne network admin http://127.0.0.1:9696
 
 
 hwclock --hctosys 
