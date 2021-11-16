@@ -2,8 +2,8 @@
 
 cat > ~/.bashrc << EOF
 ## Edit here ##
-export ip_vm_controller="192.168.122.61"
-export ip_vm_computer="192.168.122.61"
+export ip_vm_controller="192.168.122.147"
+export ip_vm_computer="192.168.122.147"
 ## Edit here ##
 
 ## Dont edit here ##
